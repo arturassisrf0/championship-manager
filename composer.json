@@ -1,0 +1,18 @@
+{
+    "name": "assis/championship-manager",
+    "description": "sistema web para gerenciamento de campeonatos",
+    "autoload": {
+        "psr-4": {
+            "Assis\\ChampionshipManager\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "arturassisrf0",
+            "email": "arturassisrf0@gmail.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.7"
+    }
+}
