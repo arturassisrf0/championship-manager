@@ -4,7 +4,7 @@ require __DIR__ .'/../vendor/autoload.php';
 
 use Dotenv\Dotenv;
 
-$dotenv = Dotenv::createMutable(dirname(__DIR__) .'/..');
+$dotenv = Dotenv::createMutable(dirname(__DIR__) .'');
 $dotenv->load();
 
 $host = $_ENV['DB_HOST'];
@@ -21,9 +21,10 @@ try {
 
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);  
 
-    if($pdo){
+   /* if($pdo){
         echo"conection ok";
     }
+*/  
 
 } catch (PDOException $e) {
     echo "Conection error ". $e->getMessage();

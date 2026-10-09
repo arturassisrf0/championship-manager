@@ -3,7 +3,7 @@
     "description": "sistema web para gerenciamento de campeonatos",
     "autoload": {
         "psr-4": {
-            "Assis\\ChampionshipManager\\": "src/"
+            "App\\": "app/"
         }
     },
     "authors": [
