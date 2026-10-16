@@ -1,0 +1,55 @@
+.bg-login {
+    background: linear-gradient(135deg, #032045 0%, #0b3e7b 55%, #061f3e 100%);
+    color: #f8fafc;
+}
+
+.bg-login .text-body,
+.bg-login .link-danger {
+    color: #bfdbfe !important;
+}
+
+.login-alert {
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    z-index: 1050;
+    width: min(90vw, 32rem);
+    margin: 0;
+    transform: translate(-50%, -50%);
+    animation: login-alert-appear-dismiss 4s ease forwards;
+}
+
+@keyframes login-alert-appear-dismiss {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -60%) scale(0.95);
+    }
+
+    12%,
+    82% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        visibility: hidden;
+        transform: translate(-50%, -45%) scale(0.95);
+    }
+}
+
+.divider:after,
+.divider:before {
+content: "";
+flex: 1;
+height: 1px;
+background: #eee;
+}
+.h-custom {
+height: calc(100% - 73px);
+}
+@media (max-width: 450px) {
+.h-custom {
+height: 100%;
+}
+}

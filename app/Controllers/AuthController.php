@@ -8,7 +8,11 @@ class AuthController extends Controller
 {
     public function showLogin(): void
     {
-        $this->view('auth/login');
+        session_start();
+        $erro = $_SESSION['erro_login'] ?? null;
+        unset($_SESSION['erro_login']);
+
+        $this->view('auth/login', ['erro' => $erro]);
     }
 
     public function buscarPorId(string $id): void
@@ -28,17 +32,19 @@ class AuthController extends Controller
 
     public function login(): void
     {
+        session_start();
+
         $email = trim($_POST['email'] ?? '');
         $senha = $_POST['senha'] ?? '';
 
         $usuario = (new User())->BuscarPorEmail($email);
 
         if (!$usuario || !password_verify($senha, $usuario['senha'])) {
-            $this->view('auth/login', ['erro' => 'E-mail ou senha inválidos']);
-            return;
+            $_SESSION['erro_login'] = 'E-mail ou senha inválidos';
+            header('Location: ' . BASE_URL . '/login');
+            exit;
         }
 
-        session_start();
         session_regenerate_id(true);
         $_SESSION['usuario_id'] = $usuario['id'];
 
