@@ -7,19 +7,24 @@ use App\Core\Router;
 $router = new Router();
 require __DIR__ . '/../app/routes.php';
 
-$script = $_SERVER['SCRIPT_NAME'];                
-$base = rtrim(dirname($script), '/\\');          
+$script = $_SERVER['SCRIPT_NAME'];
+$base = rtrim(dirname($script), '/\\');
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 if (str_starts_with($uri, $script)) {
-    $uri = substr($uri, strlen($script));        
+    $uri = substr($uri, strlen($script));
 } elseif (str_starts_with($uri, $base)) {
-    $uri = substr($uri, strlen($base));          
+    $uri = substr($uri, strlen($base));
 }
 
-$uri = '/' . trim($uri, '/');                   
+$uri = '/' . trim($uri, '/');
 
 define('BASE_URL', $base);
+
+if ($uri === '/home' && empty($_SESSION['usuario_id'])) {
+    header('Location: ' . BASE_URL . '/login');
+    exit;
+}
 
 $router->dispatch($_SERVER['REQUEST_METHOD'], $uri);
 
