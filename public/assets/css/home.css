@@ -1,0 +1,367 @@
+/* =========================================================
+   Home · 1-2 Campeonatos
+   Paleta tirada da logo e da tela de login
+   ========================================================= */
+:root {
+    --navy-900: #032045;
+    --navy-700: #0b3e7b;
+    --blue-500: #1e7bff;
+    --orange-500: #ff6a00;
+    --orange-600: #e85d00;
+    --ink: #14233b;
+    --muted: #5d6b82;
+    --line: #dde4ef;
+    --surface: #ffffff;
+    --page: #f1f4f9;
+    --ok: #18864b;
+
+    --bs-body-font-family: "Barlow", system-ui, sans-serif;
+    --bs-body-color: var(--ink);
+    --bs-primary: var(--navy-700);
+    --bs-primary-rgb: 11, 62, 123;
+    --bs-link-color: var(--navy-700);
+}
+
+body.bg-home {
+    background: var(--page);
+    font-size: 1rem;
+}
+
+.min-w-0 { min-width: 0; }
+
+/* ---------- Barra superior ---------- */
+.topbar {
+    background: linear-gradient(135deg, var(--navy-900) 0%, var(--navy-700) 100%);
+    padding: .6rem 0;
+    border-bottom: 3px solid var(--orange-500);
+}
+
+.topbar-logo {
+    height: 44px;
+    width: auto;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .35));
+}
+
+.user-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: .6rem;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, .25);
+    border-radius: 999px;
+    padding: .25rem .9rem .25rem .3rem;
+}
+
+.user-btn:hover,
+.user-btn:focus-visible,
+.user-btn.show {
+    color: #fff;
+    background: rgba(255, 255, 255, .12);
+    border-color: rgba(255, 255, 255, .5);
+}
+
+.avatar {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--orange-500);
+    color: #fff;
+    font-family: "Barlow Semi Condensed", sans-serif;
+    font-weight: 700;
+}
+
+/* ---------- Cabeçalho ---------- */
+.greeting {
+    color: var(--muted);
+    font-size: 1rem;
+}
+
+.page-title {
+    font-family: "Barlow Semi Condensed", sans-serif;
+    font-style: italic;
+    font-weight: 700;
+    font-size: clamp(1.9rem, 4vw, 2.6rem);
+    color: var(--navy-900);
+    letter-spacing: -.01em;
+}
+
+.btn-accent {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: var(--orange-500);
+    --bs-btn-border-color: var(--orange-500);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--orange-600);
+    --bs-btn-hover-border-color: var(--orange-600);
+    --bs-btn-active-bg: var(--orange-600);
+    --bs-btn-active-border-color: var(--orange-600);
+    --bs-btn-focus-shadow-rgb: 255, 106, 0;
+    font-weight: 600;
+}
+
+/* ---------- Resumo ---------- */
+.summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    margin: 0;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: .75rem;
+    overflow: hidden;
+}
+
+.summary > div {
+    flex: 1 1 10rem;
+    padding: .9rem 1.25rem;
+    border-right: 1px solid var(--line);
+}
+
+.summary > div:last-child { border-right: 0; }
+
+.summary dt {
+    font-size: .875rem;
+    font-weight: 500;
+    color: var(--muted);
+}
+
+.summary dd {
+    margin: 0;
+    font-family: "Barlow Semi Condensed", sans-serif;
+    font-weight: 700;
+    font-size: 1.75rem;
+    line-height: 1.2;
+    color: var(--navy-900);
+}
+
+/* ---------- Filtros ---------- */
+.btn-filtro {
+    --bs-btn-color: var(--muted);
+    --bs-btn-bg: var(--surface);
+    --bs-btn-border-color: var(--line);
+    --bs-btn-hover-color: var(--navy-900);
+    --bs-btn-hover-bg: #e8eef8;
+    --bs-btn-hover-border-color: var(--line);
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: var(--navy-700);
+    --bs-btn-active-border-color: var(--navy-700);
+    font-size: .9rem;
+    font-weight: 500;
+}
+
+.search {
+    position: relative;
+    flex: 1 1 14rem;
+    max-width: 20rem;
+}
+
+.search i {
+    position: absolute;
+    left: .8rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+    pointer-events: none;
+}
+
+.search .form-control {
+    padding-left: 2.2rem;
+    border-color: var(--line);
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--blue-500);
+    box-shadow: 0 0 0 .2rem rgba(30, 123, 255, .2);
+}
+
+/* ---------- Card de campeonato ---------- */
+.camp {
+    --faixa: var(--line);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-left: 5px solid var(--faixa);
+    border-radius: .75rem;
+    padding: 1.1rem 1.25rem 1.1rem 1.25rem;
+}
+
+.camp-andamento { --faixa: var(--orange-500); }
+.camp-planejado { --faixa: var(--blue-500); }
+.camp-finalizado { --faixa: #9aa7bb; }
+
+.camp-nome {
+    font-family: "Barlow Semi Condensed", sans-serif;
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: var(--navy-900);
+    overflow-wrap: anywhere;
+}
+
+.camp-periodo {
+    color: var(--muted);
+    font-size: .95rem;
+}
+
+.camp-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .35rem 1.25rem;
+    margin-top: .9rem;
+    font-size: .95rem;
+    color: var(--ink);
+}
+
+.camp-meta i { color: var(--muted); }
+
+.camp-progress {
+    height: .4rem;
+    margin-top: .75rem;
+    background: #e6ecf5;
+}
+
+.camp-andamento .progress-bar { background: var(--orange-500); }
+.camp-planejado .progress-bar { background: var(--blue-500); }
+.camp-finalizado .progress-bar { background: var(--ok); }
+
+.camp-acoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    margin-top: 1rem;
+}
+
+.badge-status {
+    display: inline-block;
+    padding: .15rem .65rem;
+    border-radius: 999px;
+    font-size: .8rem;
+    font-weight: 600;
+}
+
+.badge-andamento { background: #fff0e3; color: #b84700; }
+.badge-planejado { background: #e6f0ff; color: #0b4fb3; }
+.badge-finalizado { background: #e9edf3; color: #445068; }
+
+.btn-icon {
+    --bs-btn-color: var(--muted);
+    --bs-btn-hover-bg: #eef2f8;
+    --bs-btn-hover-color: var(--navy-900);
+    --bs-btn-border-color: transparent;
+    --bs-btn-hover-border-color: transparent;
+    --bs-btn-active-bg: #e3e9f3;
+    --bs-btn-active-border-color: transparent;
+    border-radius: .5rem;
+    padding: .25rem .5rem;
+}
+
+.btn-icon::after { display: none; }
+
+/* ---------- Lateral ---------- */
+.painel {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: .75rem;
+    padding: 1.1rem 1.25rem;
+}
+
+.painel-titulo {
+    font-family: "Barlow Semi Condensed", sans-serif;
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--navy-900);
+    margin-bottom: .9rem;
+}
+
+.jogo {
+    display: flex;
+    gap: .9rem;
+    align-items: center;
+    padding: .65rem 0;
+    border-top: 1px solid var(--line);
+}
+
+.jogo:first-child { border-top: 0; padding-top: 0; }
+
+.jogo-data {
+    flex: 0 0 3.4rem;
+    text-align: center;
+    font-family: "Barlow Semi Condensed", sans-serif;
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--navy-700);
+    background: #eaf1fc;
+    border-radius: .5rem;
+    padding: .35rem 0;
+}
+
+.jogo-data small { font-weight: 600; color: var(--muted); }
+
+.jogo-times { font-weight: 600; line-height: 1.25; }
+.jogo-times span { color: var(--muted); font-weight: 400; margin: 0 .15rem; }
+.jogo-camp { font-size: .85rem; color: var(--muted); }
+
+.passos {
+    padding-left: 1.2rem;
+    color: var(--muted);
+    font-size: .95rem;
+}
+
+.passos li { margin-bottom: .4rem; }
+.passos li:last-child { margin-bottom: 0; }
+
+/* ---------- Estado vazio ---------- */
+.vazio {
+    background: var(--surface);
+    border: 2px dashed var(--line);
+    border-radius: .75rem;
+    padding: 3rem 1.5rem;
+}
+
+.vazio i {
+    font-size: 2.75rem;
+    color: var(--orange-500);
+}
+
+.vazio h2 {
+    font-family: "Barlow Semi Condensed", sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: var(--navy-900);
+    margin: .5rem 0 .25rem;
+}
+
+.vazio p {
+    color: var(--muted);
+    margin-bottom: 1.25rem;
+}
+
+/* ---------- Modais ---------- */
+.modal-content {
+    border: 0;
+    border-radius: .85rem;
+}
+
+.modal-header,
+.modal-footer { border-color: var(--line); }
+
+.modal-title {
+    font-family: "Barlow Semi Condensed", sans-serif;
+    font-weight: 700;
+    color: var(--navy-900);
+}
+
+/* ---------- Acessibilidade ---------- */
+.btn:focus-visible,
+.dropdown-item:focus-visible,
+a:focus-visible {
+    outline: 3px solid rgba(30, 123, 255, .55);
+    outline-offset: 2px;
+}
+
+@media (max-width: 575.98px) {
+    .summary > div { border-right: 0; border-bottom: 1px solid var(--line); }
+    .summary > div:last-child { border-bottom: 0; }
+    .filtros { width: 100%; overflow-x: auto; }
+    .search { max-width: none; }
+}
