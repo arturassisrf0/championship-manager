@@ -15,6 +15,13 @@ class AuthController extends Controller
         $this->view('auth/login', ['erro' => $erro]);
     }
 
+    public function showRegister(): void
+    {
+        $erro = $_SESSION['erro_registro'] ?? null;
+        unset($_SESSION['erro_registro']);
+        $this->view('auth/register', ['erro' => $erro]);
+    }
+
     public function buscarPorId(string $id): void
     {
         $usuario = (new User())->BuscarPorId((int) $id);
