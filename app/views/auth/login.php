@@ -20,6 +20,12 @@
                 </div>
                 <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
                     <form action="/login" method="post">
+                        <?php if (isset($sucesso)): ?>
+                            <p class="alert alert-success" role="status">
+                                <?= htmlspecialchars($sucesso, ENT_QUOTES, 'UTF-8') ?>
+                            </p>
+                        <?php endif; ?>
+
                         <?php if (isset($erro)): ?>
                             <p class="alert alert-danger login-alert" role="alert">
                                 <?= htmlspecialchars($erro, ENT_QUOTES, 'UTF-8') ?>

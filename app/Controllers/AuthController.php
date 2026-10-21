@@ -10,13 +10,16 @@ class AuthController extends Controller
     {
         session_start();
         $erro = $_SESSION['erro_login'] ?? null;
+        $sucesso = $_SESSION['sucesso_registro'] ?? null;
         unset($_SESSION['erro_login']);
+        unset($_SESSION['sucesso_registro']);
 
-        $this->view('auth/login', ['erro' => $erro]);
+        $this->view('auth/login', ['erro' => $erro, 'sucesso' => $sucesso]);
     }
 
     public function showRegister(): void
     {
+        session_start();
         $erro = $_SESSION['erro_registro'] ?? null;
         unset($_SESSION['erro_registro']);
         $this->view('auth/register', ['erro' => $erro]);
@@ -35,6 +38,40 @@ class AuthController extends Controller
         header('Content-Type: application/json');
         echo json_encode($usuario);
 
+    }
+
+    public function register(): void
+    {
+        session_start();
+
+        $nome = trim($_POST['nome'] ?? '');
+        $email = trim($_POST['email'] ?? '');
+        $senha = $_POST['senha'] ?? '';
+
+        if ($nome === '' || strlen($nome) > 255 || !filter_var($email, FILTER_VALIDATE_EMAIL)
+            || strlen($email) > 255 || strlen($senha) < 8) {
+            $_SESSION['erro_registro'] = 'Informe um nome e e-mail válidos e uma senha com pelo menos 6 caracteres.';
+            header('Location: ' . BASE_URL . '/register');
+            exit;
+        }
+
+        $resultado = (new User())->RegistrarUsuario($nome, $email, $senha);
+
+        if ($resultado === 'email_existente') {
+            $_SESSION['erro_registro'] = 'Já existe uma conta cadastrada com esse e-mail.';
+            header('Location: ' . BASE_URL . '/register');
+            exit;
+        }
+
+        if (!$resultado) {
+            $_SESSION['erro_registro'] = 'Não foi possível criar sua conta. Tente novamente.';
+            header('Location: ' . BASE_URL . '/register');
+            exit;
+        }
+
+        $_SESSION['sucesso_registro'] = 'Conta criada com sucesso. Faça login para continuar.';
+        header('Location: ' . BASE_URL . '/login');
+        exit;
     }
 
     public function login(): void

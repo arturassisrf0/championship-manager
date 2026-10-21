@@ -8,4 +8,5 @@ $router->post('/login', [AuthController::class, 'login']);
 $router->get('/usuarios/{id}', [AuthController::class, 'buscarPorId']);
 $router->get('/home', [HomeController::class, 'index']);
 $router->get('/register', [AuthController::class, 'showRegister']);
+$router->post('/register', [AuthController::class, 'register']);
 ?>
