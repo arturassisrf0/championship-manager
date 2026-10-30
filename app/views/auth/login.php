@@ -49,7 +49,7 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <!-- Checkbox -->
 
-                            <a href="#" class="text-body">Esqueceu a senha?</a>
+                            <a href="/esqueci-senha" class="text-body">Esqueceu a senha?</a>
                         </div>
 
                         <div class="text-center text-lg-start mt-4 pt-2">

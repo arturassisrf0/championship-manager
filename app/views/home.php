@@ -9,7 +9,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Semi+Condensed:ital,wght@0,600;0,700;1,700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Semi+Condensed:ital,wght@0,600;0,700;1,700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/home.css">
 </head>
 
@@ -17,13 +19,18 @@
     <header class="topbar">
         <div class="container d-flex align-items-center justify-content-between">
             <a href="#" class="d-flex align-items-center text-decoration-none">
-                <img src="<?= BASE_URL ?>/assets/img/logo-12campeonatos4.webp" alt="1-2 Campeonatos" class="topbar-logo">
+                <img src="<?= BASE_URL ?>/assets/img/logo-12campeonatos4.webp" alt="1-2 Campeonatos"
+                    class="topbar-logo">
             </a>
 
             <div class="user-btn">
                 <span class="avatar" aria-hidden="true">O</span>
                 <span class="d-none d-sm-inline">Organizador</span>
             </div>
+
+            <form action="<?= BASE_URL ?>/logout" method="post">
+                <button type="submit" class="btn btn-outline-danger">Sair</button>
+            </form>
         </div>
     </header>
 
@@ -64,7 +71,8 @@
                     </div>
                     <div class="search">
                         <i class="bi bi-search"></i>
-                        <input type="search" class="form-control" placeholder="Buscar por nome" aria-label="Busca ilustrativa por campeonato">
+                        <input type="search" class="form-control" placeholder="Buscar por nome"
+                            aria-label="Busca ilustrativa por campeonato">
                     </div>
                 </div>
 
@@ -74,7 +82,8 @@
                             <div class="min-w-0">
                                 <span class="badge-status badge-andamento">Em andamento</span>
                                 <h2 class="camp-nome mt-2 mb-1">Copa Ralth 2026</h2>
-                                <p class="camp-periodo mb-0"><i class="bi bi-calendar3 me-1"></i>10/10/2026 até 20/12/2026</p>
+                                <p class="camp-periodo mb-0"><i class="bi bi-calendar3 me-1"></i>10/10/2026 até
+                                    20/12/2026</p>
                             </div>
                             <button type="button" class="btn btn-icon" aria-label="Mais ações">
                                 <i class="bi bi-three-dots-vertical"></i>
@@ -86,7 +95,8 @@
                             <span><i class="bi bi-flag me-1"></i>8 de 15 partidas</span>
                         </div>
 
-                        <div class="progress camp-progress" role="progressbar" aria-label="Partidas finalizadas" aria-valuenow="53" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress camp-progress" role="progressbar" aria-label="Partidas finalizadas"
+                            aria-valuenow="53" aria-valuemin="0" aria-valuemax="100">
                             <div class="progress-bar" style="width: 53%"></div>
                         </div>
 
@@ -102,7 +112,8 @@
                             <div class="min-w-0">
                                 <span class="badge-status badge-planejado">Planejado</span>
                                 <h2 class="camp-nome mt-2 mb-1">Torneio de Inverno</h2>
-                                <p class="camp-periodo mb-0"><i class="bi bi-calendar3 me-1"></i>15/01/2027 · sem data de término</p>
+                                <p class="camp-periodo mb-0"><i class="bi bi-calendar3 me-1"></i>15/01/2027 · sem data
+                                    de término</p>
                             </div>
                             <button type="button" class="btn btn-icon" aria-label="Mais ações">
                                 <i class="bi bi-three-dots-vertical"></i>

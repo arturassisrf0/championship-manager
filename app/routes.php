@@ -9,4 +9,9 @@ $router->get('/usuarios/{id}', [AuthController::class, 'buscarPorId']);
 $router->get('/home', [HomeController::class, 'index']);
 $router->get('/register', [AuthController::class, 'showRegister']);
 $router->post('/register', [AuthController::class, 'register']);
+$router->get('/esqueci-senha',  [AuthController::class, 'forgotForm']);
+$router->post('/esqueci-senha', [AuthController::class, 'forgotSend']);
+$router->get('/redefinir-senha',  [AuthController::class, 'resetForm']);
+$router->post('/redefinir-senha', [AuthController::class, 'resetSave']);
+$router->post('/logout', [AuthController::class, 'logout']);
 ?>

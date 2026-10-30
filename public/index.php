@@ -1,6 +1,7 @@
 <?php
 require __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/../config/database.php';
+require __DIR__ . '/../app/Core/Mailer.php';
 
 use App\Core\Router;
 
@@ -20,11 +21,6 @@ if (str_starts_with($uri, $script)) {
 $uri = '/' . trim($uri, '/');
 
 define('BASE_URL', $base);
-
-if ($uri === '/home' && empty($_SESSION['usuario_id'])) {
-    header('Location: ' . BASE_URL . '/login');
-    exit;
-}
 
 $router->dispatch($_SERVER['REQUEST_METHOD'], $uri);
 
