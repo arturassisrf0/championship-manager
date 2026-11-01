@@ -66,17 +66,11 @@ class User
         }
     }
 
-    /**
-     * Gera um token de redefinição de senha para o e-mail.
-     * Devolve o token em texto puro (vai no link do e-mail); no banco fica só o hash.
-     * A validade (1 hora) é calculada pelo próprio banco para não depender do fuso do PHP.
-     */
     public function CriarTokenReset(string $email): string|false
     {
         global $pdo;
 
         try {
-            // apaga tokens antigos desse e-mail
             $pdo->prepare('DELETE FROM tb_password_resets WHERE email = :email')
                 ->execute([':email' => $email]);
 
@@ -98,9 +92,6 @@ class User
         }
     }
 
-    /**
-     * Retorna o registro do token se ele existir, não tiver sido usado e não tiver expirado.
-     */
     public function BuscarResetValido(string $token): array|false
     {
         global $pdo;
@@ -120,9 +111,6 @@ class User
         }
     }
 
-    /**
-     * Troca a senha e marca os tokens do e-mail como usados (tudo ou nada).
-     */
     public function AtualizarSenha(string $email, string $novaSenha): bool
     {
         global $pdo;

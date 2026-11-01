@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meus campeonatos · 1-2 Campeonatos</title>
+    <title>Home</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,7 +25,7 @@
 
             <div class="user-btn">
                 <span class="avatar" aria-hidden="true">O</span>
-                <span class="d-none d-sm-inline">Organizador</span>
+                <span class="d-none d-sm-inline">Usuario</span>
             </div>
 
             <form action="<?= BASE_URL ?>/logout" method="post">

@@ -56,7 +56,7 @@ class AuthController extends Controller
             $nome === '' || strlen($nome) > 255 || !filter_var($email, FILTER_VALIDATE_EMAIL)
             || strlen($email) > 255 || strlen($senha) < 8
         ) {
-            $_SESSION['erro_registro'] = 'Informe um nome e e-mail válidos e uma senha com pelo menos 6 caracteres.';
+            $_SESSION['erro_registro'] = 'Informe um nome e e-mail válidos e uma senha com pelo menos 8 caracteres.';
             header('Location: ' . BASE_URL . '/register');
             exit;
         }
@@ -97,8 +97,9 @@ class AuthController extends Controller
 
         session_regenerate_id(true);
         $_SESSION['usuario_id'] = $usuario['id'];
+        $_SESSION['autenticado'] = true;
 
-        header('Location: /home');
+        header('Location: ' . BASE_URL . '/home');
         exit;
     }
 
