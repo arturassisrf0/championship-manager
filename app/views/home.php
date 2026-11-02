@@ -16,28 +16,15 @@
 </head>
 
 <body class="bg-home">
-    <header class="topbar">
-        <div class="container d-flex align-items-center justify-content-between">
-            <a href="#" class="d-flex align-items-center text-decoration-none">
-                <img src="<?= BASE_URL ?>/assets/img/logo-12campeonatos4.webp" alt="1-2 Campeonatos"
-                    class="topbar-logo">
-            </a>
 
-            <div class="user-btn">
-                <span class="avatar" aria-hidden="true">O</span>
-                <span class="d-none d-sm-inline">Usuario</span>
-            </div>
-
-            <form action="<?= BASE_URL ?>/logout" method="post">
-                <button type="submit" class="btn btn-outline-danger">Sair</button>
-            </form>
-        </div>
-    </header>
+    <?php
+        require('layouts/navbar.php');
+    ?>
 
     <main class="container py-4 py-lg-5">
         <div class="d-flex flex-wrap align-items-end justify-content-between gap-3 mb-4">
             <div>
-                <p class="greeting mb-1">Olá, Organizador</p>
+                <p class="greeting mb-1">Olá, <?= htmlspecialchars($usuario['nome'])?></p>
                 <h1 class="page-title mb-0">Meus campeonatos</h1>
             </div>
             <button type="button" class="btn btn-accent btn-lg">
