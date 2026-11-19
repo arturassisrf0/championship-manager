@@ -58,4 +58,50 @@ class CampeonatosModel
             return false;
         }
     }
+
+    public function contarPorOrganizadorEStatus(int $idOrganizador, string $status): int|false
+    {
+        global $pdo;
+
+        try {
+            $stmt = $pdo->prepare(
+                'SELECT COUNT(*)
+                 FROM tb_campeonatos
+                 WHERE id_organizador = :id_organizador
+                   AND status = :status'
+            );
+            $stmt->execute([
+                ':id_organizador' => $idOrganizador,
+                ':status' => $status,
+            ]);
+            return (int) $stmt->fetchColumn();
+        } catch (PDOException $e) {
+            error_log('Erro ao contar campeonatos: ' . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function iniciarCampeonatosNaData(int $idOrganizador, string $dataAtual): int|false
+    {
+        global $pdo;
+
+        try {
+            $stmt = $pdo->prepare(
+                "UPDATE tb_campeonatos
+                 SET status = 'EM_ANDAMENTO'
+                 WHERE id_organizador = :id_organizador
+                   AND status = 'PLANEJADO'
+                   AND data_inicio <= :data_atual"
+            );
+            $stmt->execute([
+                ':id_organizador' => $idOrganizador,
+                ':data_atual' => $dataAtual,
+            ]);
+
+            return $stmt->rowCount();
+        } catch (PDOException $e) {
+            error_log('Erro ao iniciar campeonatos pela data: ' . $e->getMessage());
+            return false;
+        }
+    }
 }

@@ -16,7 +16,15 @@ class Mailer
 
     public function __construct()
     {
-        $this->config = require __DIR__ . '/../../config/mail.php';
+        $this->config = [
+            'host' => $_ENV['MAIL_HOST'] ?? 'localhost',
+            'port' => (int) ($_ENV['MAIL_PORT'] ?? 1025),
+            'encryption' => $_ENV['MAIL_ENCRYPTION'] ?? 'none',
+            'username' => $_ENV['MAIL_USERNAME'] ?? '',
+            'password' => $_ENV['MAIL_PASSWORD'] ?? '',
+            'from_email' => $_ENV['MAIL_FROM_ADDRESS'] ?? 'nao-responda@localhost',
+            'from_name' => $_ENV['MAIL_FROM_NAME'] ?? 'Championship Manager',
+        ];
     }
 
     /**
@@ -30,10 +38,12 @@ class Mailer
         try {
             $mail->isSMTP();
             $mail->Host       = $this->config['host'];
-            $mail->SMTPAuth   = true;
+            $mail->SMTPAuth   = $this->config['username'] !== '';
             $mail->Username   = $this->config['username'];
             $mail->Password   = $this->config['password'];
-            $mail->SMTPSecure = $this->config['encryption']; // 'tls' ou 'ssl'
+            $mail->SMTPSecure = $this->config['encryption'] === 'none'
+                ? ''
+                : $this->config['encryption']; // 'tls' ou 'ssl'
             $mail->Port       = $this->config['port'];
             $mail->CharSet    = 'UTF-8';
 

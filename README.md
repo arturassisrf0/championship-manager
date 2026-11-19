@@ -13,11 +13,13 @@ Sistema web em desenvolvimento para organizar campeonatos esportivos, com foco a
 - Página inicial protegida e telas de login, cadastro, esqueci a senha e redefinição.
 - Schema PostgreSQL para usuários, campeonatos, times, atletas, vínculos de atletas, rodadas, partidas e eventos de partida.
 - Cadastro de campeonato com formulário, validação no servidor e proteção CSRF.
+- Contadores reais de campeonatos planejados, em andamento e finalizados na home.
+- Atualização de campeonatos planejados para em andamento quando a data de início chega e o organizador acessa a home.
 
 ### Em andamento / ainda não conectado
 
 - O cadastro persiste nome, datas, local e descrição. Modalidade e formato ainda não fazem parte do schema nem do formulário.
-- A home exibe campeonatos e métricas de exemplo, sem consultar dados reais do banco.
+- A lista de campeonatos, partidas futuras e alguns dados de partidas exibidos na home ainda são exemplos estáticos.
 - Gestão de times, atletas, rodadas, partidas, resultados e classificação ainda não está implementada nas telas/fluxos da aplicação.
 
 ## Arquitetura e diretórios
@@ -46,18 +48,10 @@ O ponto de entrada é `public/index.php`. O `Router` despacha as rotas de `app/r
 ## Configuração local
 
 1. Instale as dependências com `composer install`.
-2. Crie um arquivo `.env` na raiz com as variáveis abaixo e os valores do seu PostgreSQL:
-
-   ```dotenv
-   DB_HOST=localhost
-   DB_PORT=5432
-   DB_NAME=championship_manager
-   DB_USER=seu_usuario
-   DB_PASSWORD=sua_senha
-   ```
+2. Copie `.env.example` para `.env` e preencha as configurações do banco e do SMTP. Para SMTP real, use credenciais próprias e mantenha o `.env` fora do Git.
 
 3. Crie o banco e aplique `database/schema.sql` nele.
-4. Configure o SMTP localmente em `config/mail.php`, usando suas próprias credenciais. Esse arquivo está listado no `.gitignore`; não versione credenciais.
+4. O envio de e-mail lê as variáveis `MAIL_*` do `.env`; não coloque credenciais em arquivos PHP versionados.
 5. Inicie/configure o servidor web com `public/` como raiz pública. Em instalação sob um subdiretório, confira a URL base usada pelos links e formulários.
 
 `config/database.php` carrega as variáveis do `.env` e cria a conexão PDO com PostgreSQL. Atualmente a DSN fixa a porta `5432`, embora `DB_PORT` seja lida; ajuste essa implementação se usar outra porta.
@@ -80,6 +74,13 @@ O ponto de entrada é `public/index.php`. O `Router` despacha as rotas de `app/r
 ## Cadastro de campeonatos
 
 `App\Controllers\CampeonatosController` concentra a exibição e o processamento do formulário, enquanto `CampeonatosModel` acessa o banco. O organizador vem da sessão autenticada, e os campos do cadastro são validados antes da gravação. Modalidade e formato podem ser incluídos quando fizerem parte do schema.
+
+### Regras de status
+
+- Um campeonato é criado como `PLANEJADO`.
+- Ao carregar `/home`, o sistema compara `data_inicio` com a data atual no fuso `America/Sao_Paulo`. Se a data de início chegou, muda o status de `PLANEJADO` para `EM_ANDAMENTO`.
+- Essa atualização ocorre quando o organizador acessa a home. Sem uma visita, o registro permanece planejado até o próximo acesso; uma tarefa agendada no servidor seria necessária para atualizar mesmo sem visitas.
+- A data de término não muda o status para `FINALIZADO`. A conclusão continua dependendo de uma ação explícita ou de uma regra futura baseada nas partidas.
 
 ## Observações
 

@@ -22,30 +22,9 @@
     ?>
 
     <main class="container py-4 py-lg-5">
-        <div class="d-flex flex-wrap align-items-end justify-content-between gap-3 mb-4">
-            <div>
-                <p class="greeting mb-1">Olá, <?= htmlspecialchars($usuario['nome']) ?></p>
-                <h1 class="page-title mb-0">Meus campeonatos</h1>
-            </div>
-            <a href="<?= BASE_URL ?>/registrar-campeonato" class="btn btn-accent btn-lg">
-                <i class="bi bi-plus-lg me-1"></i>Novo campeonato
-            </a>
-        </div>
-
-        <dl class="summary mb-4">
-            <div>
-                <dt>Em andamento</dt>
-                <dd>1</dd>
-            </div>
-            <div>
-                <dt>Times cadastrados</dt>
-                <dd>12</dd>
-            </div>
-            <div>
-                <dt>Partidas finalizadas</dt>
-                <dd>8</dd>
-            </div>
-        </dl>
+        <?php 
+        require('layouts/primeira_section.php') 
+        ?>
 
         <div class="row g-4">
             <div class="col-lg-8">
