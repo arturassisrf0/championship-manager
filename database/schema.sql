@@ -22,6 +22,8 @@ CREATE TABLE tb_campeonatos (
     data_fim DATE,
     status VARCHAR(20) NOT NULL DEFAULT 'PLANEJADO',
     id_organizador INTEGER NOT NULL,
+    local VARCHAR(255) NOT NULL DEFAULT '',
+    descricao TEXT NOT NULL DEFAULT '',
 
     CONSTRAINT fk_campeonato_organizador
         FOREIGN KEY (id_organizador)

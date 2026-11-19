@@ -1,0 +1,61 @@
+<?php
+
+namespace App\Models;
+
+use PDO;
+use PDOException;
+
+class CampeonatosModel
+{
+    public function buscarPorOrganizador(int $idOrganizador): array|false
+    {
+        global $pdo;
+
+        try {
+            $stmt = $pdo->prepare(
+                'SELECT id, nome, data_inicio, data_fim, status
+                 FROM tb_campeonatos
+                 WHERE id_organizador = :id_organizador
+                 ORDER BY data_inicio DESC'
+            );
+            $stmt->execute([':id_organizador' => $idOrganizador]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log('Erro ao listar campeonatos: ' . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function registrar(
+        string $nome,
+        string $dataInicio,
+        ?string $dataFim,
+        string $local,
+        string $descricao,
+        int $idOrganizador
+    ): int|false
+    {
+        global $pdo;
+
+        try {
+            $stmt = $pdo->prepare(
+                "INSERT INTO tb_campeonatos (nome, data_inicio, data_fim, status, id_organizador, local, descricao)
+                 VALUES (:nome, :data_inicio, :data_fim, 'PLANEJADO', :id_organizador, :local, :descricao)
+                 RETURNING id"
+            );
+            $stmt->execute([
+                ':nome' => $nome,
+                ':data_inicio' => $dataInicio,
+                ':data_fim' => $dataFim,
+                ':id_organizador' => $idOrganizador,
+                ':local' => $local,
+                ':descricao' => $descricao,
+            ]);
+
+            return (int) $stmt->fetchColumn();
+        } catch (PDOException $e) {
+            error_log('Erro ao cadastrar campeonato: ' . $e->getMessage());
+            return false;
+        }
+    }
+}

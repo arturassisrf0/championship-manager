@@ -18,18 +18,18 @@
 <body class="bg-home">
 
     <?php
-        require('layouts/navbar.php');
+    require('layouts/navbar.php');
     ?>
 
     <main class="container py-4 py-lg-5">
         <div class="d-flex flex-wrap align-items-end justify-content-between gap-3 mb-4">
             <div>
-                <p class="greeting mb-1">Olá, <?= htmlspecialchars($usuario['nome'])?></p>
+                <p class="greeting mb-1">Olá, <?= htmlspecialchars($usuario['nome']) ?></p>
                 <h1 class="page-title mb-0">Meus campeonatos</h1>
             </div>
-            <button type="button" class="btn btn-accent btn-lg">
+            <a href="<?= BASE_URL ?>/registrar-campeonato" class="btn btn-accent btn-lg">
                 <i class="bi bi-plus-lg me-1"></i>Novo campeonato
-            </button>
+            </a>
         </div>
 
         <dl class="summary mb-4">

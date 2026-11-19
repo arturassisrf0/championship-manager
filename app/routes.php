@@ -1,5 +1,6 @@
 <?php
 use App\Controllers\AuthController;
+use App\Controllers\CampeonatosController;
 use App\Controllers\HomeController;
 
 $router->get('/login', [AuthController::class, 'showLogin']);
@@ -14,4 +15,6 @@ $router->post('/esqueci-senha', [AuthController::class, 'forgotSend']);
 $router->get('/redefinir-senha',  [AuthController::class, 'resetForm']);
 $router->post('/redefinir-senha', [AuthController::class, 'resetSave']);
 $router->post('/logout', [AuthController::class, 'logout']);
+$router->get('/registrar-campeonato', [CampeonatosController::class, 'showCreate']);
+$router->post('/registrar-campeonato', [CampeonatosController::class, 'create']);
 ?>
