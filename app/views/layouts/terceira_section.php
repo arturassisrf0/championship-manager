@@ -3,9 +3,21 @@
         Não foi possível carregar seus campeonatos. Tente novamente mais tarde.
     </div>
 <?php elseif ($campeonatos === []): ?>
+    <?php
+    $mensagemVazia = match ($statusFiltro) {
+        'PLANEJADO' => 'Você ainda não tem nenhum campeonato planejado.',
+        'EM_ANDAMENTO' => 'Você ainda não tem nenhum campeonato em andamento.',
+        'FINALIZADO' => 'Você ainda não tem nenhum campeonato finalizado.',
+        default => 'Você ainda não cadastrou campeonatos.',
+    };
+    ?>
     <div class="alert alert-info" role="status">
-        Você ainda não cadastrou campeonatos.
-        <a href="<?= BASE_URL ?>/registrar-campeonato">Criar campeonato</a>
+        <?= htmlspecialchars($mensagemVazia, ENT_QUOTES, 'UTF-8') ?>
+        <?php if ($statusFiltro === null): ?>
+            <a href="<?= BASE_URL ?>/registrar-campeonato">Criar campeonato</a>
+        <?php else: ?>
+            <a href="<?= BASE_URL ?>/home">Ver todos</a>
+        <?php endif; ?>
     </div>
 <?php else: ?>
     <?php foreach ($campeonatos as $campeonato): ?>

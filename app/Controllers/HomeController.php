@@ -12,6 +12,12 @@ class HomeController extends Controller
     {
         $this->exigirLogin();
 
+        $filtroUrl = $_GET['status'] ?? null;
+        $lerFiltro = match ($filtroUrl) {
+            'PLANEJADO', 'EM_ANDAMENTO', 'FINALIZADO' => $filtroUrl,
+            default => null,
+        };
+
         $usuarioId = (int) $_SESSION['usuario_id'];
         $usuario = (new User())->buscarPorId($usuarioId);
         $campeonatosModel = new CampeonatosModel();
@@ -27,7 +33,7 @@ class HomeController extends Controller
         $paginaAtual = ($paginaSolicitada !== false && $paginaSolicitada > 0)
             ? $paginaSolicitada
             : 1;
-        $totalCampeonatos = $campeonatosModel->contarPorOrganizador($usuarioId);
+        $totalCampeonatos = $campeonatosModel->contarPorOrganizador($usuarioId, $lerFiltro);
 
         if ($totalCampeonatos === false) {
             $campeonatos = false;
@@ -40,9 +46,11 @@ class HomeController extends Controller
             $campeonatos = $campeonatosModel->buscarPaginaPorOrganizador(
                 $usuarioId,
                 $porPagina,
-                $offset
+                $offset,
+                $lerFiltro
             );
         }
+
 
         $this->view('home', [
             'usuario' => $usuario,
@@ -51,6 +59,7 @@ class HomeController extends Controller
             'planejados' => $campeonatosModel->contarPorOrganizadorEStatus($usuarioId, 'PLANEJADO') ?? 0,
             'finalizados' => $campeonatosModel->contarPorOrganizadorEStatus($usuarioId, 'FINALIZADO') ?? 0,
             'campeonatos' => $campeonatos,
+            'statusFiltro' => $lerFiltro,
             'paginaAtual' => $paginaAtual,
             'totalPaginas' => $totalPaginas,
         ]);
