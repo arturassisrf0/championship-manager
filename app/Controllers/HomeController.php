@@ -22,12 +22,37 @@ class HomeController extends Controller
             $dataAtual->format('Y-m-d')
         );
 
+        $porPagina = 10;
+        $paginaSolicitada = filter_var($_GET['pagina'] ?? 1, FILTER_VALIDATE_INT);
+        $paginaAtual = ($paginaSolicitada !== false && $paginaSolicitada > 0)
+            ? $paginaSolicitada
+            : 1;
+        $totalCampeonatos = $campeonatosModel->contarPorOrganizador($usuarioId);
+
+        if ($totalCampeonatos === false) {
+            $campeonatos = false;
+            $totalPaginas = 0;
+            $paginaAtual = 1;
+        } else {
+            $totalPaginas = (int) ceil($totalCampeonatos / $porPagina);
+            $paginaAtual = min($paginaAtual, max(1, $totalPaginas));
+            $offset = ($paginaAtual - 1) * $porPagina;
+            $campeonatos = $campeonatosModel->buscarPaginaPorOrganizador(
+                $usuarioId,
+                $porPagina,
+                $offset
+            );
+        }
+
         $this->view('home', [
             'usuario' => $usuario,
             'primeiraLetra' => mb_substr($usuario['nome'], 0, 1, 'UTF-8'),
             'emAndamento' => $campeonatosModel->contarPorOrganizadorEStatus($usuarioId, 'EM_ANDAMENTO') ?? 0,
             'planejados' => $campeonatosModel->contarPorOrganizadorEStatus($usuarioId, 'PLANEJADO') ?? 0,
             'finalizados' => $campeonatosModel->contarPorOrganizadorEStatus($usuarioId, 'FINALIZADO') ?? 0,
+            'campeonatos' => $campeonatos,
+            'paginaAtual' => $paginaAtual,
+            'totalPaginas' => $totalPaginas,
         ]);
     }
 }

@@ -26,6 +26,47 @@ class CampeonatosModel
         }
     }
 
+    public function buscarPaginaPorOrganizador(int $idOrganizador, int $limite, int $offset): array|false
+    {
+        global $pdo;
+
+        try {
+            $stmt = $pdo->prepare(
+                'SELECT id, nome, data_inicio, data_fim, status
+                 FROM tb_campeonatos
+                 WHERE id_organizador = :id_organizador
+                 ORDER BY data_inicio DESC, id DESC
+                 LIMIT :limite OFFSET :offset'
+            );
+            $stmt->bindValue(':id_organizador', $idOrganizador, PDO::PARAM_INT);
+            $stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
+            $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+            $stmt->execute();
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log('Erro ao listar página de campeonatos: ' . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function contarPorOrganizador(int $idOrganizador): int|false
+    {
+        global $pdo;
+
+        try {
+            $stmt = $pdo->prepare(
+                'SELECT COUNT(*) FROM tb_campeonatos WHERE id_organizador = :id_organizador'
+            );
+            $stmt->execute([':id_organizador' => $idOrganizador]);
+
+            return (int) $stmt->fetchColumn();
+        } catch (PDOException $e) {
+            error_log('Erro ao contar campeonatos do organizador: ' . $e->getMessage());
+            return false;
+        }
+    }
+
     public function registrar(
         string $nome,
         string $dataInicio,
@@ -33,8 +74,7 @@ class CampeonatosModel
         string $local,
         string $descricao,
         int $idOrganizador
-    ): int|false
-    {
+    ): int|false {
         global $pdo;
 
         try {

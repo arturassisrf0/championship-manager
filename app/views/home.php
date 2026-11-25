@@ -22,81 +22,16 @@
     ?>
 
     <main class="container py-4 py-lg-5">
-        <?php 
-        require('layouts/primeira_section.php') 
-        ?>
+        <?php
+        require('layouts/primeira_section.php')
+            ?>
 
         <div class="row g-4">
             <div class="col-lg-8">
-                <div class="toolbar d-flex flex-wrap gap-2 align-items-center justify-content-between mb-3">
-                    <div class="btn-group filtros" role="group" aria-label="Filtros ilustrativos por status">
-                        <button type="button" class="btn btn-filtro active">Todos</button>
-                        <button type="button" class="btn btn-filtro">Em andamento</button>
-                        <button type="button" class="btn btn-filtro">Planejados</button>
-                        <button type="button" class="btn btn-filtro">Finalizados</button>
-                    </div>
-                    <div class="search">
-                        <i class="bi bi-search"></i>
-                        <input type="search" class="form-control" placeholder="Buscar por nome"
-                            aria-label="Busca ilustrativa por campeonato">
-                    </div>
-                </div>
+                <?php require('layouts/segunda_section.php') ?>
 
                 <div class="d-grid gap-3">
-                    <article class="camp camp-andamento">
-                        <div class="d-flex justify-content-between align-items-start gap-2">
-                            <div class="min-w-0">
-                                <span class="badge-status badge-andamento">Em andamento</span>
-                                <h2 class="camp-nome mt-2 mb-1">Copa Ralth 2026</h2>
-                                <p class="camp-periodo mb-0"><i class="bi bi-calendar3 me-1"></i>10/10/2026 até
-                                    20/12/2026</p>
-                            </div>
-                            <button type="button" class="btn btn-icon" aria-label="Mais ações">
-                                <i class="bi bi-three-dots-vertical"></i>
-                            </button>
-                        </div>
-
-                        <div class="camp-meta">
-                            <span><i class="bi bi-people me-1"></i>8 times</span>
-                            <span><i class="bi bi-flag me-1"></i>8 de 15 partidas</span>
-                        </div>
-
-                        <div class="progress camp-progress" role="progressbar" aria-label="Partidas finalizadas"
-                            aria-valuenow="53" aria-valuemin="0" aria-valuemax="100">
-                            <div class="progress-bar" style="width: 53%"></div>
-                        </div>
-
-                        <div class="camp-acoes">
-                            <button type="button" class="btn btn-primary btn-sm">Gerenciar</button>
-                            <button type="button" class="btn btn-outline-secondary btn-sm">Times</button>
-                            <button type="button" class="btn btn-outline-secondary btn-sm">Partidas</button>
-                        </div>
-                    </article>
-
-                    <article class="camp camp-planejado">
-                        <div class="d-flex justify-content-between align-items-start gap-2">
-                            <div class="min-w-0">
-                                <span class="badge-status badge-planejado">Planejado</span>
-                                <h2 class="camp-nome mt-2 mb-1">Torneio de Inverno</h2>
-                                <p class="camp-periodo mb-0"><i class="bi bi-calendar3 me-1"></i>15/01/2027 · sem data
-                                    de término</p>
-                            </div>
-                            <button type="button" class="btn btn-icon" aria-label="Mais ações">
-                                <i class="bi bi-three-dots-vertical"></i>
-                            </button>
-                        </div>
-
-                        <div class="camp-meta">
-                            <span><i class="bi bi-people me-1"></i>4 times</span>
-                            <span><i class="bi bi-flag me-1"></i>0 de 6 partidas</span>
-                        </div>
-
-                        <div class="camp-acoes">
-                            <button type="button" class="btn btn-primary btn-sm">Gerenciar</button>
-                            <button type="button" class="btn btn-outline-secondary btn-sm">Times</button>
-                            <button type="button" class="btn btn-outline-secondary btn-sm">Partidas</button>
-                        </div>
-                    </article>
+                    <?php require('layouts/terceira_section.php') ?>
                 </div>
             </div>
 
