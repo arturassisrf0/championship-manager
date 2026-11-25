@@ -15,12 +15,15 @@ Sistema web em desenvolvimento para organizar campeonatos esportivos, com foco a
 - Cadastro de campeonato com formulário, validação no servidor e proteção CSRF.
 - Contadores reais de campeonatos planejados, em andamento e finalizados na home.
 - Atualização de campeonatos planejados para em andamento quando a data de início chega e o organizador acessa a home.
+- Lista de campeonatos do organizador na home, com paginação de até 10 itens por página.
 
 ### Em andamento / ainda não conectado
 
 - O cadastro persiste nome, datas, local e descrição. Modalidade e formato ainda não fazem parte do schema nem do formulário.
-- A lista de campeonatos, partidas futuras e alguns dados de partidas exibidos na home ainda são exemplos estáticos.
+- As partidas futuras e alguns dados de times/partidas exibidos na home ainda são exemplos estáticos.
 - Gestão de times, atletas, rodadas, partidas, resultados e classificação ainda não está implementada nas telas/fluxos da aplicação.
+- Implementar tempo de sessão
+- Implementar codigo contra ataques de brute force
 
 ## Arquitetura e diretórios
 
@@ -66,7 +69,7 @@ O ponto de entrada é `public/index.php`. O `Router` despacha as rotas de `app/r
 | GET, POST | `/register` | Exibe e processa cadastro de usuário |
 | GET, POST | `/esqueci-senha` | Solicita redefinição de senha |
 | GET, POST | `/redefinir-senha` | Exibe e salva nova senha usando token |
-| GET | `/home` | Página inicial (requer login) |
+| GET | `/home` | Página inicial paginada (`?pagina=2`, requer login; 10 campeonatos por página) |
 | GET | `/usuarios/{id}` | Consulta usuário autenticado, sem retornar a senha |
 | GET | `/registrar-campeonato` | Exibe o formulário de cadastro (requer login) |
 | POST | `/registrar-campeonato` | Valida e cria campeonato planejado (requer login) |
