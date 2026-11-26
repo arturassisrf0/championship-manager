@@ -60,6 +60,7 @@
                     <h2 class="painel-titulo">Como começar</h2>
                     <ol class="passos mb-0">
                         <li>Crie o campeonato com nome e datas.</li>
+                        <li>Volte para a pagina inicial e clique em "gerenciar"</li>
                         <li>Cadastre os times e os atletas.</li>
                         <li>Monte as rodadas e as partidas.</li>
                         <li>Registre gols e cartões durante os jogos.</li>
