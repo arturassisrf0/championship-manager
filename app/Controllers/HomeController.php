@@ -17,6 +17,8 @@ class HomeController extends Controller
             'PLANEJADO', 'EM_ANDAMENTO', 'FINALIZADO' => $filtroUrl,
             default => null,
         };
+        $termoBusca = $_GET['busca'] ?? '';
+        $termoBusca = is_string($termoBusca) ? trim($termoBusca) : '';
 
         $usuarioId = (int) $_SESSION['usuario_id'];
         $usuario = (new User())->buscarPorId($usuarioId);
@@ -33,7 +35,7 @@ class HomeController extends Controller
         $paginaAtual = ($paginaSolicitada !== false && $paginaSolicitada > 0)
             ? $paginaSolicitada
             : 1;
-        $totalCampeonatos = $campeonatosModel->contarPorOrganizador($usuarioId, $lerFiltro);
+        $totalCampeonatos = $campeonatosModel->contarPorOrganizador($usuarioId, $lerFiltro, $termoBusca);
 
         if ($totalCampeonatos === false) {
             $campeonatos = false;
@@ -47,7 +49,8 @@ class HomeController extends Controller
                 $usuarioId,
                 $porPagina,
                 $offset,
-                $lerFiltro
+                $lerFiltro,
+                $termoBusca
             );
         }
 
@@ -60,6 +63,7 @@ class HomeController extends Controller
             'finalizados' => $campeonatosModel->contarPorOrganizadorEStatus($usuarioId, 'FINALIZADO') ?? 0,
             'campeonatos' => $campeonatos,
             'statusFiltro' => $lerFiltro,
+            'termoBusca' => $termoBusca,
             'paginaAtual' => $paginaAtual,
             'totalPaginas' => $totalPaginas,
         ]);

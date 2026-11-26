@@ -26,71 +26,78 @@ class CampeonatosModel
         }
     }
 
-    public function buscarPaginaPorOrganizador(int $idOrganizador, int $limite, int $offset, ?string $status = null): array|false
+    public function buscarPaginaPorOrganizador(int $idOrganizador, int $limite, int $offset, ?string $status = null, ?string $termoBusca = null): array|false
     {
         global $pdo;
 
         try {
+            $condicoes = ['id_organizador = :id_organizador'];
+            $parametros = [':id_organizador' => $idOrganizador];
 
-            if ($status != null) {
-                $stmt = $pdo->prepare(
-                    'SELECT id, nome, data_inicio, data_fim, status
-                 FROM tb_campeonatos
-                 WHERE id_organizador = :id_organizador
-                 AND status = :status
-                 ORDER BY data_inicio DESC, id DESC
-                 LIMIT :limite OFFSET :offset'
-                );
-                $stmt->bindValue(':id_organizador', $idOrganizador, PDO::PARAM_INT);
-                $stmt->bindValue(':status', $status, PDO::PARAM_STR);
-                $stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
-                $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
-                $stmt->execute();
-
-                return $stmt->fetchAll(PDO::FETCH_ASSOC);
-            } else {
-                $stmt = $pdo->prepare(
-                    'SELECT id, nome, data_inicio, data_fim, status
-                 FROM tb_campeonatos
-                 WHERE id_organizador = :id_organizador
-                 ORDER BY data_inicio DESC, id DESC
-                 LIMIT :limite OFFSET :offset'
-                );
-                $stmt->bindValue(':id_organizador', $idOrganizador, PDO::PARAM_INT);
-                $stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
-                $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
-                $stmt->execute();
-
-                return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if ($status !== null && $status !== '') {
+                $condicoes[] = 'status = :status';
+                $parametros[':status'] = $status;
             }
+
+            if ($termoBusca !== null && $termoBusca !== '') {
+                $condicoes[] = 'nome ILIKE :termoBusca';
+                $parametros[':termoBusca'] = '%' . $termoBusca . '%';
+            }
+
+            $sql = 'SELECT id, nome, data_inicio, data_fim, status
+                    FROM tb_campeonatos
+                    WHERE ' . implode(' AND ', $condicoes) . '
+                    ORDER BY data_inicio DESC, id DESC
+                    LIMIT :limite OFFSET :offset';
+
+            $stmt = $pdo->prepare($sql);
+
+            foreach ($parametros as $placeholder => $valor) {
+                $tipo = $placeholder === ':id_organizador' ? PDO::PARAM_INT : PDO::PARAM_STR;
+                $stmt->bindValue($placeholder, $valor, $tipo);
+            }
+
+            $stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
+            $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+            $stmt->execute();
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             error_log('Erro ao listar página de campeonatos: ' . $e->getMessage());
             return false;
         }
     }
 
-    public function contarPorOrganizador(int $idOrganizador, ?string $status = null): int|false
+    public function contarPorOrganizador(int $idOrganizador, ?string $status = null, ?string $termoBusca = null): int|false
     {
         global $pdo;
 
         try {
-            if ($status != null) {
-                $stmt = $pdo->prepare(
-                    'SELECT COUNT(*) FROM tb_campeonatos WHERE id_organizador = :id_organizador AND status = :status'
-                );
-                $stmt->bindValue(':id_organizador', $idOrganizador, PDO::PARAM_INT);
-                $stmt->bindValue(':status', $status, PDO::PARAM_STR);
-                $stmt->execute();
+            $condicoes = ['id_organizador = :id_organizador'];
+            $parametros = [':id_organizador' => $idOrganizador];
 
-                return (int) $stmt->fetchColumn();
-            } else {
-                $stmt = $pdo->prepare(
-                    'SELECT COUNT(*) FROM tb_campeonatos WHERE id_organizador = :id_organizador'
-                );
-                $stmt->execute([':id_organizador' => $idOrganizador]);
-
-                return (int) $stmt->fetchColumn();
+            if ($status !== null && $status !== '') {
+                $condicoes[] = 'status = :status';
+                $parametros[':status'] = $status;
             }
+
+            if ($termoBusca !== null && $termoBusca !== '') {
+                $condicoes[] = 'nome ILIKE :termoBusca';
+                $parametros[':termoBusca'] = '%' . $termoBusca . '%';
+            }
+
+            $sql = 'SELECT COUNT(*)
+                    FROM tb_campeonatos
+                    WHERE ' . implode(' AND ', $condicoes);
+
+            $stmt = $pdo->prepare($sql);
+            foreach ($parametros as $placeholder => $valor) {
+                $tipo = $placeholder === ':id_organizador' ? PDO::PARAM_INT : PDO::PARAM_STR;
+                $stmt->bindValue($placeholder, $valor, $tipo);
+            }
+            $stmt->execute();
+
+            return (int) $stmt->fetchColumn();
         } catch (PDOException $e) {
             error_log('Erro ao contar campeonatos do organizador: ' . $e->getMessage());
             return false;
