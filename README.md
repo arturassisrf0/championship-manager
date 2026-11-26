@@ -16,11 +16,17 @@ Sistema web em desenvolvimento para organizar campeonatos esportivos, com foco a
 - Contadores reais de campeonatos planejados, em andamento e finalizados na home.
 - Atualização de campeonatos planejados para em andamento quando a data de início chega e o organizador acessa a home.
 - Lista de campeonatos do organizador na home, com paginação de até 10 itens por página.
+- Filtros da listagem por status (`PLANEJADO`, `EM_ANDAMENTO` e `FINALIZADO`), aplicados à consulta e à contagem da paginação.
+- Busca sem distinção entre maiúsculas e minúsculas por parte do nome, combinável com o filtro de status.
+- Destaque visual persistente no filtro de status selecionado.
+- Mensagens diferentes quando não há campeonatos no status selecionado.
 
 ### Em andamento / ainda não conectado
 
 - O cadastro persiste nome, datas, local e descrição. Modalidade e formato ainda não fazem parte do schema nem do formulário.
 - As partidas futuras e alguns dados de times/partidas exibidos na home ainda são exemplos estáticos.
+- Ao navegar entre páginas, os links de paginação ainda não preservam a busca nem o filtro de status selecionado.
+- Se uma busca não encontrar resultados, a mensagem vazia ainda não menciona o termo pesquisado.
 - Gestão de times, atletas, rodadas, partidas, resultados e classificação ainda não está implementada nas telas/fluxos da aplicação.
 - Implementar tempo de sessão
 - Implementar codigo contra ataques de brute force
@@ -69,7 +75,7 @@ O ponto de entrada é `public/index.php`. O `Router` despacha as rotas de `app/r
 | GET, POST | `/register` | Exibe e processa cadastro de usuário |
 | GET, POST | `/esqueci-senha` | Solicita redefinição de senha |
 | GET, POST | `/redefinir-senha` | Exibe e salva nova senha usando token |
-| GET | `/home` | Página inicial paginada (`?pagina=2`, requer login; 10 campeonatos por página) |
+| GET | `/home` | Página inicial com busca, filtros e paginação (parâmetros opcionais `busca`, `status` e `pagina`; requer login; 10 campeonatos por página) |
 | GET | `/usuarios/{id}` | Consulta usuário autenticado, sem retornar a senha |
 | GET | `/registrar-campeonato` | Exibe o formulário de cadastro (requer login) |
 | POST | `/registrar-campeonato` | Valida e cria campeonato planejado (requer login) |
@@ -84,6 +90,15 @@ O ponto de entrada é `public/index.php`. O `Router` despacha as rotas de `app/r
 - Ao carregar `/home`, o sistema compara `data_inicio` com a data atual no fuso `America/Sao_Paulo`. Se a data de início chegou, muda o status de `PLANEJADO` para `EM_ANDAMENTO`.
 - Essa atualização ocorre quando o organizador acessa a home. Sem uma visita, o registro permanece planejado até o próximo acesso; uma tarefa agendada no servidor seria necessária para atualizar mesmo sem visitas.
 - A data de término não muda o status para `FINALIZADO`. A conclusão continua dependendo de uma ação explícita ou de uma regra futura baseada nas partidas.
+
+### Listagem na home
+
+- Os filtros por status usam o parâmetro `status` na URL. Sem esse parâmetro, a listagem mostra todos os campeonatos do organizador.
+- A busca usa `busca` e procura o texto em qualquer parte do nome, sem diferenciar maiúsculas de minúsculas. Pode ser combinada com `status`.
+- O link do status selecionado recebe destaque visual após a página recarregar.
+- A paginação usa o parâmetro `pagina` e exibe até 10 campeonatos por página.
+- Os links de paginação ainda não carregam os parâmetros `busca` e `status`; essa preservação está pendente.
+- Quando não há resultados, a mensagem informa se não existem campeonatos planejados, em andamento ou finalizados; sem filtro, informa que nenhum campeonato foi cadastrado. A mensagem específica para busca sem resultados ainda está pendente.
 
 ## Observações
 
